@@ -19,21 +19,24 @@ const PlayerSubmissionForm = (props) => {
     setPoemFields(emptyValues)
   }
 
-  const onInputChange = (id, value) => {
+  const onInputChange = (value, name) => {
     const newFields = {
       ...poemFields,
-      [id]: value
+      [name]: value
     }
+  
     setPoemFields(newFields);
   };
+
+   const isValid = (value) => {
+    return value.length > 0
+  }
   
   const sendSubmission = (event) => {
     event.preventDefault();
     const submission = props.fields.map((field) => {
       if (field.key) {
-        // if (field.key.value !== '') {
-        return field.key.value;
-        // }
+        return poemFields[field.key];
       } else {
         return field;
       } 
@@ -42,61 +45,33 @@ const PlayerSubmissionForm = (props) => {
     resetForm();
   }
 
+  const inputValues = props.fields.map((field) => {
+    if (field.key) {
+      return <input
+      // name={field.name}
+      placeholder={field.placeholder} 
+      type="text"
+      onChange={(event) => {onInputChange(event.target.value, field.key)}}
+      value={poemFields[field.key]}
+      key={field.index}
+      className={isValid(poemFields[field.key]) ? 'PlayerSubmissionForm__poem-inputs' : 'PlayerSubmissionFormt__input--invalid'}
+      data-testid={field.name}
+    /> 
+    } else {
+      return field;
+    }
+  });
+
   return (
     <div className="PlayerSubmissionForm">
-      <h3>Player Submission Form for Player #{props.index}</h3>
+      <h3>Player Submission Form for Player #{ props.index }</h3>
 
-      <form className="PlayerSubmissionForm__form" >
+      <form 
+        className="PlayerSubmissionForm__form"
+        onSubmit={sendSubmission} >
 
         <div className="PlayerSubmissionForm__poem-inputs">
-          <input
-            placeholder="adjective"
-            type="text" 
-            name='adj1'
-            data-testid='adj1'
-            value={props.fields.adj1}
-            onChange={onInputChange}
-          />
-          <input
-            placeholder='noun'
-            type='text'
-            name='noun1'
-            data-testid='noun1'
-            value={props.fields.noun1}
-            onChange={onInputChange}
-          />
-          <input
-            placeholder='adverb'
-            type='text'
-            name='adv'
-            data-testid='adv'
-            value={props.fields.adv}
-            onChange={onInputChange}
-          />
-          <input
-            placeholder='verb'
-            type='text'
-            name='verb'
-            data-testid='verb'
-            value={props.fields.verb}
-            onChange={onInputChange}
-          />
-          <input
-            placeholder='adjective'
-            type='text'
-            name='adj2'
-            data-testid='adj2'
-            value={props.fields.adj2}
-            onChange={onInputChange}
-          />
-          <input
-            placeholder='noun'
-            type='text'
-            name='noun2'
-            data-testid='noun2'
-            value={props.fields.noun2}
-            onChange={onInputChange}
-          />
+          { inputValues }
         </div>
 
         <div className="PlayerSubmissionForm__submit">
@@ -104,7 +79,6 @@ const PlayerSubmissionForm = (props) => {
           type="submit" 
           value="Submit Line" 
           className="PlayerSubmissionForm__submit-btn"
-          onSubmit={sendSubmission}
           />
         </div>
       </form>

@@ -14,11 +14,16 @@ const Game = () => {
   }).join(' ');
 
   const [submissions, setSubmissions] = useState([])
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const addSubmission = (submission) => {
     setSubmissions([...submissions,submission])
   }
-
+  
+  const revealPoem = (event) => {
+    event.preventDefault();
+    setIsSubmitted(true);
+  }
 
   return (
     <div className="Game">
@@ -32,7 +37,7 @@ const Game = () => {
         { exampleFormat }
       </p>
 
-      <RecentSubmission onAddSubmissionCallback={addSubmission} />
+      <RecentSubmission submission={ submissions[submissions.length - 1]} />
 
       <PlayerSubmissionForm 
         index={ submissions.length + 1 }
@@ -40,7 +45,11 @@ const Game = () => {
         fields={ FIELDS } 
       />
 
-      <FinalPoem />
+      <FinalPoem 
+        isSubmitted={isSubmitted}
+        submissions={submissions}
+        revealPoem={revealPoem}
+      />
 
     </div>
   );
