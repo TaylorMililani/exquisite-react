@@ -6,7 +6,7 @@ const FinalPoem = (props) => {
 
   const button = 
     <div className="FinalPoem__reveal-btn-container">
-      <input type="button" value="We are finished: Reveal the Poem" className="FinalPoem__reveal-btn" onClick={props.revealpoem} />
+      <input type="button" value="We are finished: Reveal the Poem" className="FinalPoem__reveal-btn" onClick={props.revealPoem} />
     </div>
 
   const completePoemLines = props.submissions.map((submission, index) => {
