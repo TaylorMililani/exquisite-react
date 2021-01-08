@@ -3,32 +3,32 @@ import '@testing-library/jest-dom/extend-expect';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PlayerSubmissionForm from './PlayerSubmissionForm';
-import { FIELDS } from './Game';
+
 describe('Wave 1:  PlayerSubmissionForm', () => {
   // Arrange
 
-  // const FIELDS = [
-  //   'The',
-  //   {
-  //     key: 'adj1',
-  //     placeholder: 'adjective1',
-  //   },
-  //   'Test',
-  //   {
-  //     key: 'noun1',
-  //     placeholder: 'noun1',
-  //   },
-  //   'Better',
-  //   {
-  //     key: 'verb1',
-  //     placeholder: 'verb1',
-  //   },
-  //   'Pass',
-  //   {
-  //     key: 'adverb1',
-  //     placeholder: 'adverb1',
-  //   },
-  // ];
+  const FIELDS = [
+    'The',
+    {
+      key: 'adj1',
+      placeholder: 'adjective1',
+    },
+    'Test',
+    {
+      key: 'noun1',
+      placeholder: 'noun1',
+    },
+    'Better',
+    {
+      key: 'verb1',
+      placeholder: 'verb1',
+    },
+    'Pass',
+    {
+      key: 'adverb1',
+      placeholder: 'adverb1',
+    },
+  ];
  
   test('renders with the proper input fields and a submit button', () => {
      // Act
@@ -42,10 +42,8 @@ describe('Wave 1:  PlayerSubmissionForm', () => {
 
     // Assert
     inputFields.forEach(field => {
-      // const regex = new RegExp('^' + field.placeholder + '$', 'i');
-      // const inputField = screen.getByPlaceholderText(regex);
-      const regex = new RegExp('^' + field.key + '$');
-      const inputField = screen.getByTestId(regex);
+      const regex = new RegExp('^' + field.placeholder + '$', 'i');
+      const inputField = screen.getByPlaceholderText(regex);
       expect(inputField).toBeInTheDocument();
     });
   });
@@ -66,10 +64,8 @@ describe('Wave 1:  PlayerSubmissionForm', () => {
     // Assert
     inputFields.forEach(async field => {
       // Find the input field
-      // const regex = new RegExp('^' + field.placeholder + '$', 'i');
-      // const inputField = screen.getByPlaceholderText(regex)
-      const regex = new RegExp('^' + field.key + '$');
-      const inputField = screen.getByTestId(regex)
+      const regex = new RegExp('^' + field.placeholder + '$', 'i');
+      const inputField = screen.getByPlaceholderText(regex)
 
       // Type in that input field
       userEvent.type(inputField, letters.charAt(index));
