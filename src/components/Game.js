@@ -13,6 +13,13 @@ const Game = () => {
     }
   }).join(' ');
 
+  const [submissions, setSubmissions] = useState([])
+
+  const addSubmission = (submission) => {
+    setSubmissions([...submissions,submission])
+  }
+
+
   return (
     <div className="Game">
       <h2>Game</h2>
@@ -25,9 +32,13 @@ const Game = () => {
         { exampleFormat }
       </p>
 
-      <RecentSubmission />
+      <RecentSubmission onAddSubmissionCallback={addSubmission} />
 
-      <PlayerSubmissionForm />
+      <PlayerSubmissionForm 
+        index={ submissions.length + 1 }
+        sendSubmission={ addSubmission }
+        fields={ FIELDS } 
+      />
 
       <FinalPoem />
 
@@ -36,7 +47,7 @@ const Game = () => {
 }
 
 
-const FIELDS = [
+export const FIELDS = [
   'The',
   {
     key: 'adj1',
